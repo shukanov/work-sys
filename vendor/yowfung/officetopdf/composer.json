@@ -1,0 +1,26 @@
+{
+    "name": "yowfung/officetopdf",
+    "description": "This is a PHP Laravel library, which uses LibreOffice built-in command to convert Office documents(such as doc, docx, xls, xlsx, ppt, pptx, wps, dwg and so on) to PDF files.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "PHP", "Laravel", "Office", "LibreOffice", "Convert", "doc", "xls", "ppt", "pdf"
+    ],
+    "homepage": "http://www.yowfung.cn",
+
+    "authors": [
+        {
+            "name": "yowfung",
+            "email": "yowfung@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^5.3.3 || ^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "YowFung\\OfficeToPdf\\": "src/"
+        }
+    }
+}

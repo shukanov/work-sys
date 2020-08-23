@@ -154,71 +154,114 @@ class FilesController extends Controller
 
         $downloadType = Yii::$app->request->post('download_type');
         $filename = Yii::$app->request->post('filename');
+        $data = Yii::$app->request->post();
+        $id_staff = $data['FilesSearch']['id_staff'];
         $selectedFilesIdsNotDecoded = json_decode(Yii::$app->request->post('selectionArray'));
         $selectedFilesIds = [];
 
-        if (!empty($selectedFilesIdsNotDecoded)) {
-            foreach ($selectedFilesIdsNotDecoded as $notDecodedFileId) {
-                if (current(get_object_vars($notDecodedFileId)) == true) {
-                    $selectedFilesIds[] = key(get_object_vars($notDecodedFileId));
+        if (!empty($id_staff)) {
+            if (!empty($selectedFilesIdsNotDecoded)) {
+                foreach ($selectedFilesIdsNotDecoded as $notDecodedFileId) {
+                    if (current(get_object_vars($notDecodedFileId)) == true) {
+                        $selectedFilesIds[] = key(get_object_vars($notDecodedFileId));
+                    }
                 }
-            }
-            asort($selectedFilesIds);
+                asort($selectedFilesIds);
 
 
-            $selectedFiles = Files::find();
+                $selectedFiles = Files::find();
 
-            foreach ($selectedFilesIds as $fileId) {
-                $selectedFiles->orWhere(['id' => $fileId]);
-            }
-
-            $selectedFiles = $selectedFiles->all();
-
-            foreach ($selectedFiles as $file) {
-                if (strpos($file->file, '.doc') == false &&
-                    strpos($file->file, '.docx') == false) {
-                    $downloadType = 2;
+                foreach ($selectedFilesIds as $fileId) {
+                    $selectedFiles->orWhere(['id' => $fileId]);
                 }
-                if (!file_exists(Yii::getAlias('@webroot') . $file->file)) {
-                    return $this->redirect(['index', 'error' => 'Файл ' . Yii::getAlias('@webroot') . $file->file . ' ' . 'не существует.']);
+
+                $selectedFiles = $selectedFiles->all();
+
+                foreach ($selectedFiles as $file) {
+                    if (strpos($file->file, '.doc') == false &&
+                        strpos($file->file, '.docx') == false) {
+                        $downloadType = 2;
+                    }
+                    if (!file_exists(Yii::getAlias('@webroot') . $file->file)) {
+                        return $this->redirect(['index', 'error' => 'Файл ' . Yii::getAlias('@webroot') . $file->file . ' ' . 'не существует.']);
+                    }
                 }
-            }
 
-            if ($downloadType == 1) {
-                $savePath = $this->mergeFiles($selectedFiles, $filename);
-            } elseif ($downloadType == 2) {
-                $savePath = $this->makeArchiveOfFiles($selectedFiles);
-            }
+                if ($downloadType == 1) {
+                    $savePath = $this->mergeFiles($selectedFiles, $filename, $id_staff);
+                } elseif ($downloadType == 2) {
+                    $savePath = $this->makeArchiveOfFiles($selectedFiles);
+                }
 
-            return \Yii::$app->response->sendFile($savePath);
+                return \Yii::$app->response->sendFile($savePath);
+            } else {
+                return $this->redirect(['index']);
+            }
         } else {
-            return $this->redirect(['index']);
+
+                return $this->redirect(['index', 'error' => 'Вы не указали пользователя. Введите фамилию в колонке "ФИО"']);
         }
     }
 
-    protected function mergeFiles($selectedFiles, $filename)
+    protected function mergeFiles($selectedFiles, $filename, $id_staff)
     {
         $filesPaths = [];
+        $date = date('Y-m-d H:i:s');
+        $filenameServer = uniqid($more_entropy = true);
 
         if (empty($filename)) {
             $filename = uniqid($more_entropy = true);
         }
 
         foreach ($selectedFiles as $file) {
-            $filesPaths[] = Yii::getAlias('@webroot') . $file->file;
+            exec('libreoffice --convert-to pdf "'.Yii::getAlias('@webroot') . $file->file.'" --outdir  "'.Yii::getAlias('@webroot') .'"/uploads/FilesFiles/');
+            
+            $arrayfileNamePDF = explode(".", $file->file);
+            $arrayfileNamePDF[1] = 'pdf';
+            $fileNamePDF = implode(".", $arrayfileNamePDF);
+            
+            $filesPaths[] = Yii::getAlias('@webroot') . $fileNamePDF;
         }
 
-        $savePath = Yii::getAlias('@webroot') . "/uploads/FilesFiles/MergedDocs/" . $filename . ".docx";
+        $savePath = Yii::getAlias('@webroot') . "/uploads/FilesFiles/MergedPDF/" . $filenameServer . ".pdf";
+        $modelName = "/uploads/FilesFiles/MergedPDF/" . $filenameServer . ".pdf";
 
+        $pdf = new \Clegginabox\PDFMerger\PDFMerger;
 
-        //$dm = new DocxMerge();
-        //$dm->merge( $filesPaths, $savePath );
+        foreach ($filesPaths as $path) {
 
-        $docxMerge = \Jupitern\Docx\DocxMerge::instance()
-            // add array of files to merge
-            ->addFiles($filesPaths)
-            // output filepath and pagebreak param
-            ->save($savePath, true);
+            $pdf->addPDF($path, 'all');
+        }
+
+        // echo print_r($filesPaths, true);
+        // exit();
+
+        $pdf->merge('file', $savePath); // generate the file
+
+        foreach ($filesPaths as $path) {
+
+            unlink($path);
+        }
+
+        $data = [
+            'id_staff' => $id_staff,
+            'type' => 'pdf',
+            'datetime' => $date,
+            'file' => $modelName,
+            'header' => $filename,
+            'comment' => 'Объединение из docx',
+        ];
+
+        $model = Files::createFiles($data);
+
+        // $model->id_staff = $id_staff;
+        // $model->type = 'pdf';
+        // $model->datetime = $date;
+        // $model->file = $modelName;
+        // $model->header = $filename;
+        // $model->comment = 'Объединение из docx';
+
+        $model->save();
 
         return $savePath;
     }

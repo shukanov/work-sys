@@ -1,0 +1,94 @@
+{
+    "name": "yiisoft/yii2-app-basic",
+    "description": "Yii 2 Basic Project Template",
+    "keywords": ["yii2", "framework", "basic", "project template"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "*",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",  
+        "yiisoft/yii2-bootstrap4": "*",
+        "yiisoft/yii2-swiftmailer": "*",
+        "kartik-v/yii2-grid": "@dev",
+        "kartik-v/yii2-dynagrid": "dev-master",
+        "kartik-v/yii2-widgets": "*",
+        "kartik-v/yii2-editable": "*",
+        "kartik-v/yii2-krajee-base": "@dev",
+        "kartik-v/yii2-bootstrap4-dropdown": "*",
+        "kartik-v/yii2-datecontrol": "*",
+        "kartik-v/yii2-checkbox-x": "@dev",
+        "mootensai/yii2-enhanced-gii": "dev-master",
+        "kartik-v/yii2-tree-manager": "dev-master",
+        "mrdreek/docx-merge": "^1.0",
+        "jupitern/docx": "^1.0",
+        "phpoffice/phpword": "^0.17.0",
+        "yowfung/officetopdf": "^1.0",
+        "dompdf/dompdf": "^0.8.5",
+        "mpdf/mpdf": "^8.0",
+        "symfony/console": "5.*",
+        "kartik-v/yii2-date-range": "dev-master",
+        "kartik-v/yii2-widget-datetimepicker": "dev-master",
+        "kartik-v/yii2-field-range": "dev-master",
+        "ncjoes/office-converter": "^1.0",
+        "clegginabox/pdf-merger": "dev-master"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "yiisoft/yii2-faker": "*",
+        "codeception/codeception": "*",
+        "codeception/verify": "*",
+        "codeception/specify": "*",
+        "symfony/browser-kit": "*",
+        "codeception/module-filesystem": "*",
+        "codeception/module-yii2": "*",
+        "codeception/module-asserts": "*"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "yii\\composer\\Installer::postInstall"
+        ],
+        "post-create-project-cmd": [
+            "yii\\composer\\Installer::postCreateProject",
+            "yii\\composer\\Installer::postInstall"
+        ]
+    },
+    "extra": {
+        "yii\\composer\\Installer::postCreateProject": {
+            "setPermission": [
+                {
+                    "runtime": "0777",
+                    "web/assets": "0777",
+                    "yii": "0755"
+                }
+            ]
+        },
+        "yii\\composer\\Installer::postInstall": {
+            "generateCookieValidationKey": [
+                "config/web.php"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}
