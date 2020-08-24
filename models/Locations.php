@@ -98,6 +98,23 @@ class Locations extends \yii\db\ActiveRecord
         ];
     }
 
+<<<<<<< Updated upstream
+=======
+    public static function getMapFullName()
+    {
+        $locationsIdFullNamePairs = [];
+        $locationsList = Locations::find()->all();
+
+        foreach ($locationsList as $location) {
+            $name = $location->location;
+
+            $staffSalaryIdFullNamePairs[$location->id_location] = $name;
+        }
+
+        return $staffSalaryIdFullNamePairs;
+    }
+
+>>>>>>> Stashed changes
     // public function upload()
     // {
 

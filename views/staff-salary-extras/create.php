@@ -18,6 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'id_salary' => $id_salary,
         'id_staff' => $id_staff,
+<<<<<<< Updated upstream
+=======
+        'id_location' => $id_location,
+>>>>>>> Stashed changes
     ]) ?>
 
 </div>

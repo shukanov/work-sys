@@ -18,7 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <h2><?= 'Staff Salary Extras'.' '. Html::encode($this->title) ?></h2>
         </div>
         <div class="col-sm-3" style="margin-top: 15px">
+<<<<<<< Updated upstream
             
+=======
+
+            <!--
+>>>>>>> Stashed changes
             <?= Html::a('Update', ['update-without-nav-bar', 'id' => $model->id_extra], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Delete', ['delete-without-nav-bar', 'id' => $model->id_extra], [
                 'class' => 'btn btn-danger',
@@ -28,6 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ])
             ?>
+<<<<<<< Updated upstream
+=======
+            -->
+>>>>>>> Stashed changes
         </div>
     </div>
 

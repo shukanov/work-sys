@@ -102,7 +102,10 @@ return array(
     'PhpOffice\\PhpSpreadsheet\\' => array($vendorDir . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet'),
     'PhpOffice\\Common\\' => array($vendorDir . '/phpoffice/common/src/Common'),
     'Opis\\Closure\\' => array($vendorDir . '/opis/closure/src'),
+<<<<<<< Updated upstream
     'NcJoes\\OfficeConverter\\' => array($vendorDir . '/ncjoes/office-converter/src/OfficeConverter'),
+=======
+>>>>>>> Stashed changes
     'MyCLabs\\Enum\\' => array($vendorDir . '/myclabs/php-enum/src'),
     'Mpdf\\' => array($vendorDir . '/mpdf/mpdf/src'),
     'Matrix\\' => array($vendorDir . '/markbaker/matrix/classes/src'),

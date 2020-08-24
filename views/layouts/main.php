@@ -89,7 +89,10 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+<<<<<<< Updated upstream
         <?= Alert::widget() ?>
+=======
+>>>>>>> Stashed changes
         <?= $content ?>
     </div>
 </div>
@@ -105,9 +108,30 @@ AppAsset::register($this);
 <?php $this->endBody() ?>
 <script>
     function newMyWindow(e) {
+<<<<<<< Updated upstream
         var h = 600,
             w = 1400;
         window.open(e, '', 'scrollbars=1,height='+Math.min(h, screen.availHeight)+',width='+Math.min(w, screen.availWidth)+',left='+Math.max(0, (screen.availWidth - w)/2)+',top='+Math.max(0, (screen.availHeight - h)/2));
+=======
+        let h = screen.availHeight * 0.73,
+            w = screen.availWidth * 0.83;
+
+        if (e == '/index.php?r=salary/index') {
+            var xmlHttp = new XMLHttpRequest();
+
+            let dates = 'date_start=' + document.getElementById('salaryDateRange1').value;
+            dates = dates + '&date_end=' + document.getElementById('salaryDateRange2').value
+
+            xmlHttp.open("GET", 'index.php?r=salary/has-unapproved-salaries&' + dates, false); // true for asynchronous
+            xmlHttp.send(null);
+
+            if (xmlHttp.responseText == 'true') {
+                window.open(e, '', 'scrollbars=1,height=' + Math.min(h, screen.availHeight) + ',width=' + Math.min(w, screen.availWidth) + ',left=' + Math.max(0, (screen.availWidth - w) / 2) + ',top=' + Math.max(0, (screen.availHeight - h) / 2));
+            }
+        } else {
+            window.open(e, '', 'scrollbars=1,height=' + Math.min(h, screen.availHeight) + ',width=' + Math.min(w, screen.availWidth) + ',left=' + Math.max(0, (screen.availWidth - w) / 2) + ',top=' + Math.max(0, (screen.availHeight - h) / 2));
+        }
+>>>>>>> Stashed changes
     }
 </script>
 </body>

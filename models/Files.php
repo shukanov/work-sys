@@ -105,6 +105,7 @@ class Files extends \yii\db\ActiveRecord
         return gmdate('Y-m-d H:i:s', time() + 3600*($timezoneGMT+date("I")));
     }
 
+<<<<<<< Updated upstream
     public static function createFiles($data) {
         $model = new Files();
 
@@ -119,4 +120,6 @@ class Files extends \yii\db\ActiveRecord
         return $model;
     }
 
+=======
+>>>>>>> Stashed changes
 }

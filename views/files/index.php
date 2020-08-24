@@ -333,7 +333,11 @@ $this->registerCss($css, ["type" => "text/css"], "errorModalWindow");
 
             hidden.value = getCookie('selectedRowsOnPages');
 
+<<<<<<< Updated upstream
             deleteCookie('selectedRowsOnPages');
+=======
+            //deleteCookie('selectedRowsOnPages');
+>>>>>>> Stashed changes
         }
     </script>
     <?php
@@ -342,6 +346,10 @@ $this->registerCss($css, ["type" => "text/css"], "errorModalWindow");
     }
     ?>
     <?=Html::submitButton('Загрузить документы', ['class' => 'btn btn-info', 'id' => 'downloadSubmit','style' => 'margin-left: 1em;']);?>
+<<<<<<< Updated upstream
+=======
+    <?= Html::a('Сбросить выбор файлов', ['index'], ['class' => 'btn btn-success', 'style' => 'margin-left: 1em;']) ?>
+>>>>>>> Stashed changes
     </div>
 
     <?= GridView::widget([

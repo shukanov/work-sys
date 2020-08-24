@@ -131,4 +131,12 @@ class StaffSalaryExtras extends \yii\db\ActiveRecord
 
         return false;
     }
+<<<<<<< Updated upstream
+=======
+
+    public static function getCurrentDateTime($timezoneGMT = 3)
+    {
+        return gmdate('Y-m-d H:i:s', time() + 3600*($timezoneGMT+date("I")));
+    }
+>>>>>>> Stashed changes
 }

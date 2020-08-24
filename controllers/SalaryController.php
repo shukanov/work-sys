@@ -48,7 +48,6 @@ class SalaryController extends Controller
      */
     public function actionIndex()
     {
-
         if (Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -224,52 +223,181 @@ class SalaryController extends Controller
     {
         $staffAllAndSalaries = [];
 
-        $dateStart = Yii::$app->request->get('date_start') . ' ' . '00:00:00';
-        $dateEnd = Yii::$app->request->get('date_end') . ' ' . '23:59:59';
+        $dateStartWithoutTime = Yii::$app->request->get('date_start');
+        $dateEndWithoutTime = Yii::$app->request->get('date_end');
 
-        $staffAll = Staff::find()->select(['id_staff', 'last_name', 'first_name'])->all();
+        $dateStartWithoutTime = '2020-07-01';
+        $dateEndWithoutTime = '2020-12-31';
 
-        foreach ($staffAll as $staff) {
-            $staffAndSalaries = [];
+        $dateStart = $dateStartWithoutTime . ' ' . '00:00:00';
+        $dateEnd = $dateEndWithoutTime . ' ' . '23:59:59';
 
-            $salaries = StaffSalary::find()->where([
-                'id_staff' => $staff->id_staff,
-            ])
+        $dateStart = '2020-07-01' . ' ' . '00:00:00';
+        $dateEnd = '2020-12-31' . ' ' . '23:59:59';
+
+        $query = new \yii\db\Query;
+
+        $query
+            ->select('staff.*')
+            ->from(['staff', 'staff_salary'])
+            ->where('staff.id_staff=staff_salary.id_staff')
             ->andWhere([
                 '>=', 'time_job_end', $dateStart
             ])
             ->andWhere([
                 '<=', 'time_job_end', $dateEnd
             ])
+            ->groupBy('staff.id_staff');
+
+
+        //$query = Yii::$app->db->createCommand('SELECT * FROM staff, staff_salary where staff.id_staff=staff_salary.id_staff');
+
+//        $data = $query->all();
+//
+//        echo '<pre>';
+//        echo print_r($query, true);
+//        echo '</pre>';
+//        exit();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('salary-grid', [
+            'dataProvider' => $dataProvider,
+            'dateStart' => $dateStartWithoutTime,
+            'dateEnd' => $dateEndWithoutTime,
+        ]);
+    }
+
+    public function actionGenerateRko()
+    {
+        Yii::$app->getSession()->removeAllFlashes('warning');
+
+        $errors = [];
+        $rkoFilePaths = [];
+
+        $dateStartWithoutTime = Yii::$app->request->post('date_start');
+        $dateEndWithoutTime = Yii::$app->request->post('date_end');
+
+        $dateStart = $dateStartWithoutTime . ' ' . '00:00:00';
+        $dateEnd = $dateEndWithoutTime . ' ' . '23:59:59';
+
+        $query = new \yii\db\Query;
+
+        $staff = $query
+            ->select('staff.*')
+            ->from(['staff', 'staff_salary'])
+            ->where('staff.id_staff=staff_salary.id_staff')
+            ->andWhere([
+                '>=', 'time_job_end', $dateStart
+            ])
+            ->andWhere([
+                '<=', 'time_job_end', $dateEnd
+            ])
+            ->groupBy('staff.id_staff')
             ->all();
 
-            if (!empty($salaries)) {
-                $staffAndSalaries['staff'] = $staff;
-                $staffAndSalaries['salaries'] = $salaries;
+        foreach ($staff as $oneStaff) {
+            $savePath = '';
 
-                $staffAllAndSalaries[] = $staffAndSalaries;
+            $documentNumber = hexdec(uniqid($more_entropy = true));
+            $documentDate = date('Y-m-d');
+
+            $sumWithNds = Salary::calculateSalary($oneStaff['id_staff']);
+
+            $fullName = $oneStaff['last_name'] . ' ' . $oneStaff['first_name'] . ' ' . $oneStaff['second_name'];
+
+            $reason = Yii::$app->request->post('reason');
+            if (empty($reason)) {
+              $errors[$fullName]['reason'] = 'Отсутствует значение поля \'Основание\'.';
+            }
+
+
+            $sumWithoutNds = round($sumWithNds * 0.87, 2);
+
+            $sumWithoutNdsWords = Salary::sum2words($sumWithoutNds);
+
+            $documentDateWords = Salary::getDateWord();
+
+            $passport =
+              'паспорт гражданина РФ' . ' ' .
+              //$oneStaff['passport_series'] . ' ' .
+              $oneStaff['passport_number'] . ' ' .
+              $oneStaff['passport_authority'] . ' ' .
+              $oneStaff['passport_date'];
+
+//            if (empty($oneStaff['passport_series'])) {
+//                $errors[$oneStaff[$fullName]]['passport_series'] = 'Отсутствует серия паспорта.';
+//            }
+            if (empty($oneStaff['passport_number'])) {
+                $errors[$fullName]['passport_number'] = 'Отсутствует номер паспорта.';
+            }
+            if (empty($oneStaff['passport_authority'])) {
+                $errors[$fullName]['passport_authority'] = 'Отсутствует кем выдан паспорт.';
+            }
+            if (empty($oneStaff['passport_date'])) {
+                $errors[$fullName]['passport_date'] = 'Отсутствует дата выдачи паспорта.';
+            }
+
+            if (empty($errors[$fullName])) {
+                $loadPath = Yii::getAlias('@webroot') . '/uploads/FilesFiles/rko' . 'Template.docx';
+                $relationPath = '/uploads/FilesFiles/rko' . $documentNumber . '.docx';
+                $savePath = Yii::getAlias('@webroot') . $relationPath;
+
+                $PHPWord = new \PhpOffice\PhpWord\PhpWord();
+                $document = $PHPWord->loadTemplate($loadPath); //шаблон
+
+                $document->setValue('document_number', $documentNumber); //номер документа
+                $document->setValue('document_date', $documentDate); //
+                $document->setValue('sum_with_nds', $sumWithNds); //
+                $document->setValue('full_name', $fullName); //
+                $document->setValue('reason', $reason); //
+                $document->setValue('sum_without_nds_words', $sumWithoutNdsWords); //
+                $document->setValue('document_date_words', $documentDateWords); //
+                $document->setValue('passport', $passport); //
+
+                $document->saveAs($savePath);
+
+
+                $file = new Files();
+
+                $file->type = 'rko';
+                $file->file = $savePath;
+                $file->datetime = date('Y-m-d H:i:s');
+                $file->comment = $dateStartWithoutTime . '-' . $dateEndWithoutTime;
+
+                $file->save();
+            }
+
+            if (!empty($savePath)) {
+                $rkoFilePaths[] = $savePath;
             }
         }
 
-        $staffAllAndSalary = [];
+        if (!empty($errors)) {
+            foreach($rkoFilePaths as $path) {
+              unlink(Yii::getAlias('@webroot') . $path);
 
-        foreach ($staffAllAndSalaries as $staffAndSalaries) {
-            $staffAndSalary = [];
+              $file = Files::find()->where([
+                  'file' => $path,
+              ]);
 
-            $staffAndSalary['last_name'] = $staffAndSalaries['staff']->last_name;
-            $staffAndSalary['first_name'] = $staffAndSalaries['staff']->first_name;
-            $staffAndSalary['second_name'] = $staffAndSalaries['staff']->second_name;
+              $file->delete();
+            }
 
-            $summ = Salary::calculateSalary($staffAndSalaries['salaries']);
+            foreach($errors as $fullName=>$error) {
+                foreach ($error as $message) {
+                    Yii::$app->getSession()->addFlash('warning', [
+                        'title' => $fullName,
+                        'body' => $message,
+                    ]);
+                }
+            }
 
-            $staffAndSalary['summ'] = round($summ);
-
-            $staffAllAndSalary[] = $staffAndSalary;
+            return $this->redirect(['salary-grid']);
+            //return $this->redirect(['salary-grid', 'date_start' => $dateStartWithoutTime, 'date_end' => $dateEndWithoutTime]);
         }
-
-        return $this->render('salary-grid', [
-            'staffAllAndSalary' => $staffAllAndSalary,
-        ]);
     }
 
     public function actionEditApprove()
@@ -300,6 +428,22 @@ class SalaryController extends Controller
             $model->update();
 
             return $model->position_approve;
+        }
+    }
+
+    public function actionHasUnapprovedSalaries()
+    {
+        $dateStart = Yii::$app->request->get('date_start');
+        $dateEnd = Yii::$app->request->get('date_end');
+
+        if (!empty($dateStart) && !empty($dateEnd)) {
+            $unapprovedSalaries = StaffSalary::unapprovedSalariesQuery($dateStart, $dateEnd)->count();
+
+            if ($unapprovedSalaries > 0) {
+                echo 'true';
+            }
+        } else {
+            echo 'false';
         }
     }
 

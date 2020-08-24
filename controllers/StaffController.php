@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Staff;
+use app\models\StaffSalary;
 use app\models\StaffSearch;
 use app\models\FilesSearch;
 use yii\web\Controller;

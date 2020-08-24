@@ -499,6 +499,36 @@ class StaffSalary extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
+<<<<<<< Updated upstream
+=======
+    public static function unapprovedSalariesQuery($dateStart, $dateEnd) {
+        $dateStartWithTime = $dateStart . ' ' . '00:00:00';
+        $dateEndWithTime = $dateEnd . ' ' . '23:59:59';
+
+        return StaffSalary::find()
+            ->where([
+                'and',
+                ['>=', 'time_job_end', $dateStartWithTime],
+                ['<=', 'time_job_end', $dateEndWithTime],
+            ])
+            ->andWhere([
+                'or',
+                [
+                    'or',
+                    ['=', 'time_job_start_approve', 0],
+                    ['=', 'time_job_end_approve', 0],
+                    ['=', 'position_approve', 0]
+                ],
+                [
+                    'or',
+                    ['time_job_start_approve' => null],
+                    ['time_job_end_approve' => null],
+                    ['position_approve' => null]
+                ]
+            ]);
+    }
+
+>>>>>>> Stashed changes
     public function getStaff()
     {
         return $this->hasOne(Staff::className(), ['id_staff' => 'id_staff']);
@@ -552,4 +582,16 @@ class StaffSalary extends \yii\db\ActiveRecord
 
         return $staffSalaryIdFullNamePairs;
     }
+<<<<<<< Updated upstream
+=======
+
+    public static function getOne($id)
+    {
+        return StaffSalary::find()
+            ->where([
+            'id_salary' => $id,
+            ])
+            ->one();
+    }
+>>>>>>> Stashed changes
 }

@@ -7,6 +7,10 @@
 use yii\helpers\Html;
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
+<<<<<<< Updated upstream
+=======
+use kartik\alert\Alert;
+>>>>>>> Stashed changes
 use kartik\select2\Select2;
 use kartik\date\DatePicker;
 use yii\helpers\ArrayHelper;
@@ -24,6 +28,7 @@ $this->registerJs($search);
 ?>
 <div class="staff-index">
 
+<<<<<<< Updated upstream
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -31,6 +36,65 @@ $this->registerJs($search);
         <?= Html::a('Создать сотрудника', ['create'], ['class' => 'btn btn-success']) ?>
         <!--<?= Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button']) ?>-->
     </p>
+=======
+    <?php
+    $message = Yii::$app->session->getFlash('warning');
+
+    if (!empty($message)) {
+        echo Alert::widget([
+            'type' => Alert::TYPE_DANGER,
+            'showSeparator' => true,
+            'title' => $message['title'],
+            'body' => $message['body'],
+        ]);
+    }
+    ?>
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <div style="display: flex; flex-direction: row; justify-content: flex-start;">
+        <div>
+        <?= Html::a('Создать сотрудника', ['create'], ['class' => 'btn btn-success']) ?>
+        </div>
+        <?=Html::beginForm(['salary/salary-grid'],'post');?>
+        <div style="display: flex; flex-direction: row; justify-content: flex-start;">
+        <div style="margin-left: 2em;">
+        <?=
+            DatePicker::widget([
+                'name' => 'date_start',
+                //'value' => date('yy-m-d'),
+                'value' => '2016-01-01',
+                'type' => DatePicker::TYPE_RANGE,
+                'name2' => 'date_end',
+                'separator' => 'до',
+                'value2' => date('yy-m-') . date('t'),
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd',
+                ],
+                'options' => [
+                    'id' => 'salaryDateRange1',
+                    'style' => 'width: 10em;'
+                ],
+                'options2' => [
+                    'id' => 'salaryDateRange2',
+                    'style' => 'width: 10em;'
+                ],
+            ])
+        ?>
+        </div>
+        <div>
+        <?= Html::submitButton('Расчёт заработной платы', ['class' => 'btn btn-info', 'onclick' => "newMyWindow('/index.php?r=salary/index');"]);?>
+        </div>
+        <div>
+        <?= Html::a('Расчёт заработной платы', ['salary/salary-grid'], ['class' => 'btn btn-success', 'onclick' => "newMyWindow('/index.php?r=salary/index');"]) ?>
+        </div>
+        <?= Html::endForm();?>
+        </div>
+        <!--<?= Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button']) ?>-->
+    </div>
+>>>>>>> Stashed changes
     <div class="search-form" style="display:none">
         <?=  $this->render('_search', ['model' => $searchModel]); ?>
     </div>

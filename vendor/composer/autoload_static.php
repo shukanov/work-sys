@@ -220,10 +220,13 @@ class ComposerStaticInit7b8fe666ecea74e654795996cf953dee
         array (
             'Opis\\Closure\\' => 13,
         ),
+<<<<<<< Updated upstream
         'N' => 
         array (
             'NcJoes\\OfficeConverter\\' => 23,
         ),
+=======
+>>>>>>> Stashed changes
         'M' => 
         array (
             'MyCLabs\\Enum\\' => 13,
@@ -653,10 +656,13 @@ class ComposerStaticInit7b8fe666ecea74e654795996cf953dee
         array (
             0 => __DIR__ . '/..' . '/opis/closure/src',
         ),
+<<<<<<< Updated upstream
         'NcJoes\\OfficeConverter\\' => 
         array (
             0 => __DIR__ . '/..' . '/ncjoes/office-converter/src/OfficeConverter',
         ),
+=======
+>>>>>>> Stashed changes
         'MyCLabs\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
@@ -770,7 +776,10 @@ class ComposerStaticInit7b8fe666ecea74e654795996cf953dee
     public static $classMap = array (
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+<<<<<<< Updated upstream
         'Clegginabox\\PDFMerger\\PDFMerger' => __DIR__ . '/..' . '/clegginabox/pdf-merger/src/PDFMerger/PDFMerger.php',
+=======
+>>>>>>> Stashed changes
         'Codeception\\Exception\\ExternalUrlException' => __DIR__ . '/..' . '/codeception/lib-innerbrowser/src/Codeception/Exception/ExternalUrlException.php',
         'Codeception\\Lib\\Connector\\Yii2' => __DIR__ . '/..' . '/codeception/module-yii2/src/Codeception/Lib/Connector/Yii2.php',
         'Codeception\\Lib\\Connector\\Yii2\\ConnectionWatcher' => __DIR__ . '/..' . '/codeception/module-yii2/src/Codeception/Lib/Connector/Yii2/ConnectionWatcher.php',
@@ -792,7 +801,10 @@ class ComposerStaticInit7b8fe666ecea74e654795996cf953dee
         'DocxMerge\\libraries\\TbsZip' => __DIR__ . '/..' . '/mrdreek/docx-merge/src/libraries/TbsZip.php',
         'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'Error' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/Error.php',
+<<<<<<< Updated upstream
         'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
+=======
+>>>>>>> Stashed changes
         'HTML5_Data' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Data.php',
         'HTML5_InputStream' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/InputStream.php',
         'HTML5_Parser' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Parser.php',

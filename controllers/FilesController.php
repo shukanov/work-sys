@@ -34,6 +34,11 @@ class FilesController extends Controller
      */
     public function actionIndex($error = '')
     {
+        if (empty(Yii::$app->request->get('page'))) {
+            unset($_COOKIE['selectedRowsOnPages']);
+            setcookie('selectedRowsOnPages', null, -1, '/');
+        }
+
         $data = '';
 
         $searchModel = new FilesSearch();
@@ -152,6 +157,8 @@ class FilesController extends Controller
     {
         $savePath = '';
 
+        //return true;
+
         $downloadType = Yii::$app->request->post('download_type');
         $filename = Yii::$app->request->post('filename');
         $data = Yii::$app->request->post();
@@ -159,12 +166,19 @@ class FilesController extends Controller
         $selectedFilesIdsNotDecoded = json_decode(Yii::$app->request->post('selectionArray'));
         $selectedFilesIds = [];
 
+<<<<<<< Updated upstream
         if (!empty($id_staff)) {
             if (!empty($selectedFilesIdsNotDecoded)) {
                 foreach ($selectedFilesIdsNotDecoded as $notDecodedFileId) {
                     if (current(get_object_vars($notDecodedFileId)) == true) {
                         $selectedFilesIds[] = key(get_object_vars($notDecodedFileId));
                     }
+=======
+        if (!empty($selectedFilesIdsNotDecoded) && !empty($downloadType)) {
+            foreach ($selectedFilesIdsNotDecoded as $notDecodedFileId) {
+                if (current(get_object_vars($notDecodedFileId)) == true) {
+                    $selectedFilesIds[] = key(get_object_vars($notDecodedFileId));
+>>>>>>> Stashed changes
                 }
                 asort($selectedFilesIds);
 

@@ -217,6 +217,7 @@ class SiteController extends Controller
             'searchModel' => $searchSalaryModel,
             'id_salary' => $id_salary,
             'id_staff' => $salary->id_staff,
+            'id_location' => $salary->id_location,
         ]);
     }
     

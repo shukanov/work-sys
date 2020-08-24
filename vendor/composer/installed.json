@@ -229,6 +229,7 @@
         ]
     },
     {
+<<<<<<< Updated upstream
         "name": "clegginabox/pdf-merger",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -265,6 +266,8 @@
         "description": "PDF File Merger for PHP5"
     },
     {
+=======
+>>>>>>> Stashed changes
         "name": "codeception/codeception",
         "version": "4.1.6",
         "version_normalized": "4.1.6.0",
@@ -4413,6 +4416,7 @@
         ]
     },
     {
+<<<<<<< Updated upstream
         "name": "ncjoes/office-converter",
         "version": "v1.0.3",
         "version_normalized": "1.0.3.0",
@@ -4460,6 +4464,8 @@
         ]
     },
     {
+=======
+>>>>>>> Stashed changes
         "name": "nikic/php-parser",
         "version": "v4.7.0",
         "version_normalized": "4.7.0.0",
@@ -7028,6 +7034,7 @@
         "homepage": "https://select2.org/"
     },
     {
+<<<<<<< Updated upstream
         "name": "setasign/fpdf",
         "version": "1.8.2",
         "version_normalized": "1.8.2.0",
@@ -7069,6 +7076,8 @@
         ]
     },
     {
+=======
+>>>>>>> Stashed changes
         "name": "setasign/fpdi",
         "version": "v2.3.3",
         "version_normalized": "2.3.3.0",

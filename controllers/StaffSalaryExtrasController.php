@@ -53,11 +53,11 @@ class StaffSalaryExtrasController extends Controller
         $searchModel = new StaffSalaryExtrasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $id = Yii::$app->request->queryParams['id'];
+        $id_salary = Yii::$app->request->queryParams['id_salary'];
 
         $this->layout = 'withoutNavBar';
 
-        $this->redirect(Url::toRoute(['site/expand-view', 'id_salary' => $id]));
+        $this->redirect(['site/expand-window-view', 'id_salary' => $id_salary]);
     }
 
     /**
@@ -117,20 +117,26 @@ class StaffSalaryExtrasController extends Controller
     public function actionCreateWithoutNavBar()
     {
         $data = Yii::$app->request->post('StaffSalaryExtras');
+
         $id_salary = Yii::$app->request->queryParams['id_salary'];
         $id_staff = Yii::$app->request->queryParams['id_staff'];
+        $id_location = Yii::$app->request->queryParams['id_location'];
 
         $model = new StaffSalaryExtras();
 
         $this->layout = 'withoutNavBar';
 
-        if ($model->load($data, '') && $model->save()) {
-            return $this->redirect(['view-without-nav-bar', 'id' => $model->id_extra, 'id_salary' => $model->id_salary]);
+        if ($model->load($data, '')) {
+            $model->timestamp = date('Y-m-d H:i:s');
+            if ($model->save()) {
+                return $this->redirect(['view-without-nav-bar', 'id' => $model->id_extra, 'id_salary' => $model->id_salary]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'id_salary' => $id_salary,
                 'id_staff' => $id_staff,
+                'id_location' => $id_location,
             ]);
         }
     }
@@ -197,7 +203,7 @@ class StaffSalaryExtrasController extends Controller
 
         $this->layout = 'withoutNavBar';
 
-        return $this->redirect(['index-without-nav-bar', 'id' => $id_salary]);
+        return $this->redirect(['index-without-nav-bar', 'id_salary' => $id_salary]);
     }
 
     public function actionEditExpand()

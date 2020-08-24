@@ -8,7 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'ArithmeticError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
     'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+<<<<<<< Updated upstream
     'Clegginabox\\PDFMerger\\PDFMerger' => $vendorDir . '/clegginabox/pdf-merger/src/PDFMerger/PDFMerger.php',
+=======
+>>>>>>> Stashed changes
     'Codeception\\Exception\\ExternalUrlException' => $vendorDir . '/codeception/lib-innerbrowser/src/Codeception/Exception/ExternalUrlException.php',
     'Codeception\\Lib\\Connector\\Yii2' => $vendorDir . '/codeception/module-yii2/src/Codeception/Lib/Connector/Yii2.php',
     'Codeception\\Lib\\Connector\\Yii2\\ConnectionWatcher' => $vendorDir . '/codeception/module-yii2/src/Codeception/Lib/Connector/Yii2/ConnectionWatcher.php',
@@ -30,7 +33,10 @@ return array(
     'DocxMerge\\libraries\\TbsZip' => $vendorDir . '/mrdreek/docx-merge/src/libraries/TbsZip.php',
     'Dompdf\\Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'Error' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/Error.php',
+<<<<<<< Updated upstream
     'FPDF' => $vendorDir . '/setasign/fpdf/fpdf.php',
+=======
+>>>>>>> Stashed changes
     'HTML5_Data' => $vendorDir . '/dompdf/dompdf/lib/html5lib/Data.php',
     'HTML5_InputStream' => $vendorDir . '/dompdf/dompdf/lib/html5lib/InputStream.php',
     'HTML5_Parser' => $vendorDir . '/dompdf/dompdf/lib/html5lib/Parser.php',

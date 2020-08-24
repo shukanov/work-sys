@@ -38,9 +38,13 @@
         "symfony/console": "5.*",
         "kartik-v/yii2-date-range": "dev-master",
         "kartik-v/yii2-widget-datetimepicker": "dev-master",
+<<<<<<< Updated upstream
         "kartik-v/yii2-field-range": "dev-master",
         "ncjoes/office-converter": "^1.0",
         "clegginabox/pdf-merger": "dev-master"
+=======
+        "kartik-v/yii2-field-range": "dev-master"
+>>>>>>> Stashed changes
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",

@@ -237,9 +237,31 @@ class Salary extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
+<<<<<<< Updated upstream
     public static function calculateSalary($salaries) {
         $summ = 0;
 
+=======
+    public static function calculateSalary($id_staff, $dateStart='', $dateEnd='')
+    {
+        $summ = 0;
+
+        $dateStart = '2020-07-01' . ' ' . '00:00:00';
+        $dateEnd = '2020-12-31' . ' ' . '23:59:59';
+
+        $salaries = StaffSalary::find()
+            ->where([
+                'id_staff' => $id_staff,
+            ])
+            ->andWhere([
+                '>=', 'time_job_end', $dateStart
+            ])
+            ->andWhere([
+                '<=', 'time_job_end', $dateEnd
+            ])
+            ->all();
+
+>>>>>>> Stashed changes
         $query = ['or'];
 
         foreach ($salaries as $salary) {
@@ -268,7 +290,11 @@ class Salary extends \yii\db\ActiveRecord
             }
         }
 
+<<<<<<< Updated upstream
         return $summ;
+=======
+        return round($summ, 2);
+>>>>>>> Stashed changes
     }
 
     protected static function calculateSalaryByRate($salary) {
@@ -332,4 +358,155 @@ class Salary extends \yii\db\ActiveRecord
 
         return $staffSalaryIdFullNamePairs;
     }
+<<<<<<< Updated upstream
+=======
+
+    public static function num2word($n,$words) {
+        return ($words[($n=($n=$n%100)>19?($n%10):$n)==1?0 : (($n>1&&$n<=4)?1:2)]);
+    }
+
+    //--------------------------------------------------------
+// Функция для преобразования числа в сумму прописью
+//--------------------------------------------------------
+// Автор: ManHunter / PCL (www.manhunter.ru)
+//--------------------------------------------------------
+    public static function sum2words($n) {
+        $words=array(
+            900=>'девятьсот',
+            800=>'восемьсот',
+            700=>'семьсот',
+            600=>'шестьсот',
+            500=>'пятьсот',
+            400=>'четыреста',
+            300=>'триста',
+            200=>'двести',
+            100=>'сто',
+            90=>'девяносто',
+            80=>'восемьдесят',
+            70=>'семьдесят',
+            60=>'шестьдесят',
+            50=>'пятьдесят',
+            40=>'сорок',
+            30=>'тридцать',
+            20=>'двадцать',
+            19=>'девятнадцать',
+            18=>'восемнадцать',
+            17=>'семнадцать',
+            16=>'шестнадцать',
+            15=>'пятнадцать',
+            14=>'четырнадцать',
+            13=>'тринадцать',
+            12=>'двенадцать',
+            11=>'одиннадцать',
+            10=>'десять',
+            9=>'девять',
+            8=>'восемь',
+            7=>'семь',
+            6=>'шесть',
+            5=>'пять',
+            4=>'четыре',
+            3=>'три',
+            2=>'два',
+            1=>'один',
+        );
+
+        $level=array(
+            4=>array('миллиард', 'миллиарда', 'миллиардов'),
+            3=>array('миллион', 'миллиона', 'миллионов'),
+            2=>array('тысяча', 'тысячи', 'тысяч'),
+        );
+
+        list($rub,$kop)=explode('.',number_format($n,2));
+        $parts=explode(',',$rub);
+
+        for($str='', $l=count($parts), $i=0; $i<count($parts); $i++, $l--) {
+            if (intval($num=$parts[$i])) {
+                foreach($words as $key=>$value) {
+                    if ($num>=$key) {
+                        // Fix для одной тысячи
+                        if ($l==2 && $key==1) {
+                            $value='одна';
+                        }
+                        // Fix для двух тысяч
+                        if ($l==2 && $key==2) {
+                            $value='две';
+                        }
+
+                        $str.=($str!=''?' ':'').$value;
+                        $num-=$key;
+                    }
+                }
+                if (isset($level[$l])) {
+                    $str.=' '.Salary::num2word($parts[$i],$level[$l]);
+                }
+            }
+        }
+
+        if (intval($rub=str_replace(',','',$rub))) {
+            $str.=' '.'руб.';
+        }
+
+        $parts=explode(',',$kop);
+
+        for($str2='', $l=count($parts), $i=0; $i<count($parts); $i++, $l--) {
+            if (intval($num=$parts[$i])) {
+                foreach($words as $key=>$value) {
+                    if ($num>=$key) {
+                        // Fix для одной тысячи
+                        if ($value == 'один') {
+                            $value='одна';
+                        }
+                        // Fix для двух тысяч
+                        if ($value == 'два') {
+                            $value='две';
+                        }
+
+                        $str2.=($str!=''?' ':'').$value;
+                        $num-=$key;
+                    }
+                }
+            }
+        }
+        $str.=($str!=''?' ':'').$str2;
+        $str.='коп.';
+
+        return mb_substr($str,0,1,'utf-8').
+            mb_substr($str,1,mb_strlen($str,'utf-8'),'utf-8');
+    }
+
+    public static function getDateWord()
+    {
+        $day = date('d');
+        $month = date('m');
+        $year = date('Y');
+
+        if ($month == 1) {
+            $month = 'Январь';
+        } elseif ($month == 2) {
+            $month = 'Февраля';
+        } elseif ($month == 3) {
+            $month = 'Марта';
+        } elseif ($month == 4) {
+            $month = 'Апреля';
+        } elseif ($month == 5) {
+            $month = 'Мая';
+        } elseif ($month == 6) {
+            $month = 'Июня';
+        } elseif ($month == 7) {
+            $month = 'Июля';
+        } elseif ($month == 8) {
+            $month = 'Августа';
+        } elseif ($month == 9) {
+            $month = 'Сентября';
+        } elseif ($month == 10) {
+            $month = 'Октября';
+        } elseif ($month == 11) {
+            $month = 'Ноября';
+        } elseif ($month == 12) {
+            $month = 'Декабря';
+        }
+
+        return $day . ' ' . $month . ' ' . $year;
+    }
+>>>>>>> Stashed changes
 }

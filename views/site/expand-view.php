@@ -13,13 +13,32 @@ use yii\helpers\VarDumper;
 
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
+<<<<<<< Updated upstream
+=======
+
+use app\models\StaffSalary;
+>>>>>>> Stashed changes
 ?>
 
 <h1><?= Html::encode($this->title) ?></h1>
 <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <p>
+<<<<<<< Updated upstream
     <?= Html::a('Создать Expand', ['staff-salary-extras/create-without-nav-bar', 'id_salary' => $id_salary, 'id_staff' => $id_staff], ['class' => 'btn btn-success']) ?>
+=======
+    <?php
+        $staffSalary = StaffSalary::getOne($id_salary);
+
+        echo Html::a('Создать Expand',
+        [
+            'staff-salary-extras/create-without-nav-bar',
+            'id_salary' => $id_salary,
+            'id_staff' => $staffSalary->id_staff,
+            'id_location' => $staffSalary->id_location,
+        ],
+        ['class' => 'btn btn-success']) ?>
+>>>>>>> Stashed changes
 </p>
 
 <?php

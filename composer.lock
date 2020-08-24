@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< Updated upstream
     "content-hash": "233118eff43723689b7a9b2fd0ffad22",
+=======
+    "content-hash": "0f8131b34691d495cebd5e328689a883",
+>>>>>>> Stashed changes
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -163,6 +167,7 @@
             "time": "2018-03-26T11:24:36+00:00"
         },
         {
+<<<<<<< Updated upstream
             "name": "clegginabox/pdf-merger",
             "version": "dev-master",
             "source": {
@@ -197,6 +202,8 @@
             "time": "2020-07-09T15:39:22+00:00"
         },
         {
+=======
+>>>>>>> Stashed changes
             "name": "creocoder/yii2-nested-sets",
             "version": "0.9.0",
             "source": {
@@ -3525,6 +3532,7 @@
             "time": "2020-02-14T08:15:52+00:00"
         },
         {
+<<<<<<< Updated upstream
             "name": "ncjoes/office-converter",
             "version": "v1.0.3",
             "source": {
@@ -3570,6 +3578,8 @@
             "time": "2020-05-11T09:45:43+00:00"
         },
         {
+=======
+>>>>>>> Stashed changes
             "name": "npm-asset/bootstrap",
             "version": "4.5.1",
             "dist": {
@@ -4379,6 +4389,7 @@
             "time": "2020-01-28T05:01:22+00:00"
         },
         {
+<<<<<<< Updated upstream
             "name": "setasign/fpdf",
             "version": "1.8.2",
             "source": {
@@ -4418,6 +4429,8 @@
             "time": "2019-12-08T10:32:10+00:00"
         },
         {
+=======
+>>>>>>> Stashed changes
             "name": "setasign/fpdi",
             "version": "v2.3.3",
             "source": {
@@ -8944,8 +8957,12 @@
         "kartik-v/yii2-tree-manager": 20,
         "kartik-v/yii2-date-range": 20,
         "kartik-v/yii2-widget-datetimepicker": 20,
+<<<<<<< Updated upstream
         "kartik-v/yii2-field-range": 20,
         "clegginabox/pdf-merger": 20
+=======
+        "kartik-v/yii2-field-range": 20
+>>>>>>> Stashed changes
     },
     "prefer-stable": false,
     "prefer-lowest": false,

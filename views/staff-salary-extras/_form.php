@@ -19,7 +19,11 @@ use yii\widgets\ActiveForm;
         if (!empty($id_staff)) {
             echo $form->field($model, 'id_staff')->hiddenInput(['value' => $id_staff])->label(false);
         } else {
+<<<<<<< Updated upstream
             echo $form->field($model, 'id_staff')->dropDownList(\app\models\Staff::getMapFullName())->label('ID сотрудника');
+=======
+            echo $form->field($model, 'id_staff')->dropDownList(\app\models\Staff::getMapFullName())->label('Сотрудник');
+>>>>>>> Stashed changes
         }
     ?>
 
@@ -27,6 +31,7 @@ use yii\widgets\ActiveForm;
         if (!empty($id_salary)) {
             echo $form->field($model, 'id_salary')->hiddenInput(['value' => $id_salary])->label(false);
         } else {
+<<<<<<< Updated upstream
             echo $form->field($model, 'id_salary')->dropDownList(\app\models\StaffSalary::getMapFullName())->label('ID смены');
         }
     ?>
@@ -38,6 +43,19 @@ use yii\widgets\ActiveForm;
             'allowClear' => true
         ],
     ]); ?>
+=======
+            echo $form->field($model, 'id_salary')->dropDownList(\app\models\StaffSalary::getMapFullName())->label('Смена');
+        }
+    ?>
+
+    <?php
+        if (!empty($id_location)) {
+            echo $form->field($model, 'id_location')->hiddenInput(['value' => $id_location])->label(false);
+        } else {
+            echo $form->field($model, 'id_location')->dropDownList(\app\models\Locations::getMapFullName())->label('Локация');
+        }
+    ?>
+>>>>>>> Stashed changes
 
     <?= $form->field($model, 'state')->textInput(['maxlength' => true, 'placeholder' => 'State']) ?>
 
@@ -62,8 +80,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'approve')->checkbox() ?>
 
+<<<<<<< Updated upstream
     <?= $form->field($model, 'timestamp')->textInput(['placeholder' => 'Timestamp']) ?>
 
+=======
+>>>>>>> Stashed changes
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
